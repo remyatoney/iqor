@@ -13,7 +13,7 @@ function bundle() {
         "!webpack.config.js",
         "!.gitignore",
     ])
-    .pipe(zip('mytheme-blocks.zip'))
+    .pipe(zip('iqor.zip'))
     .pipe(gulp.dest("bundled"));
 }
 

@@ -1,0 +1,40 @@
+.wp-block-iqor-blocks-home-intro {
+
+    &__icon-placeholder {
+        //How the image uploader 'Upload Icon Image' should look like
+    }
+
+    &__icon {
+        width: 50px;
+    }
+
+    &__title {
+        color: red;
+    }
+
+    &__heading {
+        color: blue;
+    }
+
+    &__info {
+        color: aqua;
+    }
+
+    &__animation-placeholder {
+        //Placeholder informational text of url
+    }
+
+    &__animation-url-placeholder {
+        background-color: grey;
+        border: black;
+        border-width: 2px;
+        margin: 5px;
+        padding: 10px 10px 10px 10px;
+        width: 500px;
+    }
+
+    &__animation {
+        //Lottie animation styles
+    }
+
+}
