@@ -1,0 +1,58 @@
+{
+  "name": "iqor",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint src",
+    "start": "webpack --mode=development --watch",
+    "build": "npm run lint && webpack --mode=production && gulp bundle"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@wordpress/blob": "^2.13.2",
+    "@wordpress/blocks": "^8.0.3",
+    "@wordpress/data": "^4.12.0",
+    "@wordpress/html-entities": "^2.11.2",
+    "@wordpress/i18n": "^3.20.0",
+    "jquery": "^3.6.0",
+    "terser": "^5.7.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.13.16",
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
+    "@babel/preset-env": "^7.13.15",
+    "@babel/preset-react": "^7.13.13",
+    "@wordpress/block-editor": "^5.3.3",
+    "@wordpress/browserslist-config": "^3.0.3",
+    "@wordpress/components": "^13.0.3",
+    "@wordpress/editor": "^9.26.3",
+    "@wordpress/element": "^2.20.3",
+    "@wp-g2/create-styles": "0.0.154",
+    "autoprefixer": "^10.2.5",
+    "babel-loader": "^8.2.2",
+    "browserslist": "^4.16.5",
+    "classnames": "^2.3.1",
+    "css-loader": "^5.2.4",
+    "eslint-plugin-react": "^7.23.2",
+    "gulp": "^4.0.2",
+    "gulp-zip": "^5.1.0",
+    "lodash": "^4.17.21",
+    "mini-css-extract-plugin": "^1.5.1",
+    "node-sass": "^5.0.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.4",
+    "postcss-loader": "^5.2.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-native": "^0.64.0",
+    "sass-loader": "^11.0.1",
+    "style-loader": "^2.0.0",
+    "terser-webpack-plugin": "^5.1.1",
+    "webpack": "^5.36.1",
+    "webpack-cli": "^4.6.0"
+  },
+  "browsersList": [
+    "extends @wordpress/browserslist-config"
+  ]
+}
