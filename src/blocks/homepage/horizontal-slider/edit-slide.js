@@ -5,7 +5,7 @@ import {
     BlockControls,
     MediaUpload,
     MediaUploadCheck,
-    InspectorControls
+    InspectorControls,
 } from "@wordpress/block-editor";
 import { __ } from "@wordpress/i18n";
 import { isBlobURL } from "@wordpress/blob";
@@ -18,7 +18,7 @@ import {
     TextareaControl,
 } from "@wordpress/components";
 
-class IntroductionEdit extends Component {
+class HorizonatalSliderSlideEdit extends Component {
     componentDidMount() {
         const { attributes, setAttributes } = this.props;
         const { url, id } = attributes;
@@ -29,14 +29,11 @@ class IntroductionEdit extends Component {
             });
         }
     };
-    onChangeTitle = title => {
-        this.props.setAttributes({ title });
+    onChangeSubtitle = subtitle => {
+        this.props.setAttributes({ subtitle });
     };
-    onChangeHeading = heading => {
-        this.props.setAttributes({ heading });
-    };
-    onChangeInfo = info => {
-        this.props.setAttributes({ info });
+    onChangeContent = content => {
+        this.props.setAttributes({ content });
     };
     onSelectIcon = ({ id, url, alt }) => {
         this.props.setAttributes({
@@ -68,14 +65,9 @@ class IntroductionEdit extends Component {
             alt
         });
     };
-    updateAnimation = animation => {
-        this.props.setAttributes({
-            animation
-        });
-    };
     render() {
         const { className, attributes, noticeUI } = this.props;
-        const { title, heading, info, url, alt, id, animation } = attributes;
+        const { subtitle, content, url, alt, id } = attributes;
         return (
             <>
                 <InspectorControls>
@@ -89,7 +81,7 @@ class IntroductionEdit extends Component {
                                 value={alt}
                                 onChange={this.updateAlt}
                                 help={__(
-                                    "Alternative text describes your icon to people who can't see it. Add a short description with its key details."
+                                    "Alternative text describes your icon to people can't see it. Add a short description with its key details."
                                 )}
                             />
                         )}
@@ -129,17 +121,17 @@ class IntroductionEdit extends Component {
                         </Toolbar>
                     )}
                 </BlockControls>
-                <div className={className}>
+                <div className="{className}">
                     { url ? (
                         <>
-                            <div className={ "wp-block-iqor-blocks-home-intro__icon" }>
+                            <div className={ "wp-block-iqor-blocks-home-horizontal-slider-slide__icon" }>
                                 <img src={url} alt={alt} />
                                 { isBlobURL(url) && <Spinner /> }
                             </div>
                         </>
                     ) : (
                         <MediaPlaceholder
-                            className={ "wp-block-iqor-blocks-home-intro__icon-placeholder" }
+                            className={ "wp-block-iqor-blocks-home-horizontal-slider-slide__icon-placeholder" }
                             labels = { { title: 'Upload Icon' } }
                             icon="format-image"
                             onSelect={ this.onSelectIcon }
@@ -150,44 +142,23 @@ class IntroductionEdit extends Component {
                         />
                     ) }
                     <RichText
-                        className={ "wp-block-iqor-blocks-home-intro__title" }
-                        tagName="h6"
-                        onChange={ this.onChangeTitle }
-                        value={ title }
-                        placeholder={ __("INTRODUCTION", "iqor-blocks") }
-                        
+                        className={ "wp-block-iqor-blocks-home-horizontal-slider-slide__subtitle" }
+                        tagName="h3"
+                        onChange={ this.onChangeSubtitle }
+                        value={ subtitle }
+                        placeholder={ __("Subtitle", "iqor-blocks") }
                     />
                     <RichText
-                        className={ "wp-block-iqor-blocks-home-intro__heading" }
-                        tagName="h1"
-                        onChange={ this.onChangeHeading }
-                        value={ heading }
-                        placeholder={ __("Heading", "iqor-blocks") }
-                    />
-                    <RichText
-                        className={ "wp-block-iqor-blocks-home-intro__info" }
+                        className={ "wp-block-iqor-blocks-home-horizontal-slider-slide__content" }
                         tagName="p"
-                        onChange={ this.onChangeInfo }
-                        value={info}
-                        placeholder={ __("Info", "iqor-blocks") }
+                        onChange={ this.onChangeContent }
+                        value={ content }
+                        placeholder={ __("Lorem Ipsum", "iqor-blocks") }
                     />
-                    <div className={ "wp-block-iqor-blocks-home-intro__animation-placeholder" }>
-                        {!animation &&
-                            <p className={ "wp-block-iqor-blocks-home-intro__animation-field" }>Enter Lottie Animation URL:</p>
-                        }
-                        <RichText
-                            className={ "wp-block-iqor-blocks-home-intro__animation-url-placeholder" }
-                            tagName="p"
-                            onChange={ this.updateAnimation }
-                            value={animation}
-                            label="Lottie Animation URL"
-                            placeholder={ __("https://assets4.lottiefiles.com/private_files/lf30_qaln3hii.json", "iqor-blocks") }
-                        />
-                    </div>
                 </div>
             </>
         );
     }
 }
 
-export default withNotices(IntroductionEdit);
+export default withNotices(HorizonatalSliderSlideEdit);

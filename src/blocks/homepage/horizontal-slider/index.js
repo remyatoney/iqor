@@ -1,35 +1,44 @@
 import "./style.editor.scss";
-import "./parent";
+import './child-top';
+import './child-slide';
 import { registerBlockType } from "@wordpress/blocks";
 import { __ } from "@wordpress/i18n";
-import edit from "./edit";
-import { RichText } from "@wordpress/block-editor";
+import { InnerBlocks } from "@wordpress/block-editor";
 
-const attributes = {
-    title: {
-        type: "string",
-        source: "html",
-        selector: "h4"
+registerBlockType("iqor-blocks/home-horizontal-slider", {
+    title: __("Homepage Horizontal Slider", "iqor-blocks"),
+
+    description: __("Block showing homepage horizontal slider.", "iqor-blocks"),
+
+    icon: "list-view",
+
+    category: "iqor-category",
+
+    supports: {
+        multiple: false
     },
-    info: {
-        type: "string",
-        source: "html",
-        selector: "p"
+
+    keywords: [ __("carousel", "iqor-blocks"), __("features", "iqor-blocks") ],
+
+    edit({ className }) {
+        return (
+            <div className={className}>
+                <InnerBlocks
+                    allowedBlocks={["iqor-blocks/home-horizontal-slider-top", "iqor-blocks/home-horizontal-slider-slide"]}
+                    template={[
+                        ["iqor-blocks/home-horizontal-slider-top"],
+                        ["iqor-blocks/home-horizontal-slider-slide"]
+                    ]}
+                />
+            </div>
+        );
     },
-    id: {
-        type: "number"
-    },
-    alt: {
-        type: "string",
-        source: "attribute",
-        selector: "img",
-        attribute: "alt",
-        default: ""
-    },
-    url: {
-        type: "string",
-        source: "attribute",
-        selector: "img",
-        attribute: "src"
+
+    save({ className }) {
+        return (
+            <div className={className}>
+                <InnerBlocks.Content />
+            </div>
+        );
     }
-};
+});

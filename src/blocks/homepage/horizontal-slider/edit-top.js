@@ -18,7 +18,7 @@ import {
     TextareaControl,
 } from "@wordpress/components";
 
-class IntroductionEdit extends Component {
+class HorizonatalSliderTopEdit extends Component {
     componentDidMount() {
         const { attributes, setAttributes } = this.props;
         const { url, id } = attributes;
@@ -35,8 +35,8 @@ class IntroductionEdit extends Component {
     onChangeHeading = heading => {
         this.props.setAttributes({ heading });
     };
-    onChangeInfo = info => {
-        this.props.setAttributes({ info });
+    onChangeActivity = activity => {
+        this.props.setAttributes({ activity });
     };
     onSelectIcon = ({ id, url, alt }) => {
         this.props.setAttributes({
@@ -68,14 +68,9 @@ class IntroductionEdit extends Component {
             alt
         });
     };
-    updateAnimation = animation => {
-        this.props.setAttributes({
-            animation
-        });
-    };
     render() {
         const { className, attributes, noticeUI } = this.props;
-        const { title, heading, info, url, alt, id, animation } = attributes;
+        const { title, heading, activity, url, alt, id } = attributes;
         return (
             <>
                 <InspectorControls>
@@ -89,7 +84,7 @@ class IntroductionEdit extends Component {
                                 value={alt}
                                 onChange={this.updateAlt}
                                 help={__(
-                                    "Alternative text describes your icon to people who can't see it. Add a short description with its key details."
+                                    "Alternative text describes your icon to people can't see it. Add a short description with its key details."
                                 )}
                             />
                         )}
@@ -132,14 +127,14 @@ class IntroductionEdit extends Component {
                 <div className={className}>
                     { url ? (
                         <>
-                            <div className={ "wp-block-iqor-blocks-home-intro__icon" }>
+                            <div className={ "wp-block-iqor-blocks-home-horizontal-slider-top__icon" }>
                                 <img src={url} alt={alt} />
                                 { isBlobURL(url) && <Spinner /> }
                             </div>
                         </>
                     ) : (
                         <MediaPlaceholder
-                            className={ "wp-block-iqor-blocks-home-intro__icon-placeholder" }
+                            className={ "wp-block-iqor-blocks-home-horizontal-slider-top__icon-placeholder" }
                             labels = { { title: 'Upload Icon' } }
                             icon="format-image"
                             onSelect={ this.onSelectIcon }
@@ -150,44 +145,30 @@ class IntroductionEdit extends Component {
                         />
                     ) }
                     <RichText
-                        className={ "wp-block-iqor-blocks-home-intro__title" }
+                        className={ "wp-block-iqor-blocks-home-horizontal-slider-top__title" }
                         tagName="h6"
                         onChange={ this.onChangeTitle }
                         value={ title }
-                        placeholder={ __("INTRODUCTION", "iqor-blocks") }
-                        
+                        placeholder={ __("TOP FEATURES", "iqor-blocks") }
                     />
                     <RichText
-                        className={ "wp-block-iqor-blocks-home-intro__heading" }
+                        className={ "wp-block-iqor-blocks-home-horizontal-slider-top__heading" }
                         tagName="h1"
                         onChange={ this.onChangeHeading }
                         value={ heading }
                         placeholder={ __("Heading", "iqor-blocks") }
                     />
                     <RichText
-                        className={ "wp-block-iqor-blocks-home-intro__info" }
+                        className={ "wp-block-iqor-blocks-home-horizontal-slider-top__activity" }
                         tagName="p"
-                        onChange={ this.onChangeInfo }
-                        value={info}
-                        placeholder={ __("Info", "iqor-blocks") }
+                        onChange={ this.onChangeActivity }
+                        value={activity}
+                        placeholder={ __("Explore Features", "iqor-blocks") }
                     />
-                    <div className={ "wp-block-iqor-blocks-home-intro__animation-placeholder" }>
-                        {!animation &&
-                            <p className={ "wp-block-iqor-blocks-home-intro__animation-field" }>Enter Lottie Animation URL:</p>
-                        }
-                        <RichText
-                            className={ "wp-block-iqor-blocks-home-intro__animation-url-placeholder" }
-                            tagName="p"
-                            onChange={ this.updateAnimation }
-                            value={animation}
-                            label="Lottie Animation URL"
-                            placeholder={ __("https://assets4.lottiefiles.com/private_files/lf30_qaln3hii.json", "iqor-blocks") }
-                        />
-                    </div>
                 </div>
             </>
         );
     }
 }
 
-export default withNotices(IntroductionEdit);
+export default withNotices(HorizonatalSliderTopEdit);

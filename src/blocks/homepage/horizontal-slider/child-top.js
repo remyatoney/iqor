@@ -1,7 +1,6 @@
-import "./style.editor.scss";
 import { registerBlockType } from "@wordpress/blocks";
 import { __ } from "@wordpress/i18n";
-import edit from "./edit";
+import edit from "./edit-top";
 import { RichText } from "@wordpress/block-editor";
 
 const attributes = {
@@ -15,7 +14,7 @@ const attributes = {
         source: "html",
         selector: "h1"
     },
-    info: {
+    activity: {
         type: "string",
         source: "html",
         selector: "p"
@@ -35,33 +34,36 @@ const attributes = {
         source: "attribute",
         selector: "img",
         attribute: "src"
-    },
-    animation: {
-        type: "string"
     }
 };
 
-registerBlockType("iqor-blocks/home-intro", {
-    title: __("Homepage Introduction", "iqor-blocks"),
+registerBlockType("iqor-blocks/home-horizontal-slider-top", {
+    title: __("Homepage Horizontal Slider Top", "iqor-blocks"),
 
-    description: __("Block showing introduction of iQor. ", "iqor-blocks"),
+    description: __("Block showing top portion of homepage horizontal slider. ", "iqor-blocks"),
 
-    icon: "yes-alt",
+    icon: "editor-textcolor",
+
+    parent: ["iqor-blocks/home-horizontal-slider"], //only displays team member block inside parent-team members block
 
     category: "iqor-category",
 
-    // keywords: [__("home", "iqor-blocks"), __("intro",  "iqor-blocks")],
+    supports: {
+        multiple: false
+    },
+
+    keywords: [__("title", "iqor-blocks"), __("heading",  "iqor-blocks"), __("icon",  "iqor-blocks")],
 
     attributes,
 
     edit,
 
     save: ({ attributes, className }) => {
-        const { title, heading, info, url, alt, id, animation } = attributes;
+        const { title, heading, activity, url, alt, id } = attributes;
         return (
             <div className={className}>
                 { url && (
-                    <div className={ "wp-block-iqor-blocks-home-intro__icon" }>
+                    <div className={ "wp-block-iqor-blocks-home-horizontal-slider-top__icon" }>
                         <img
                             src={ url }
                             alt={ alt } 
@@ -70,31 +72,28 @@ registerBlockType("iqor-blocks/home-intro", {
                 ) }
                 { title && (
                     <RichText.Content
-                        className={ "wp-block-iqor-blocks-home-intro__title" }
+                        className={ "wp-block-iqor-blocks-home-horizontal-slider-top__title" }
                         tagName="h6"
                         value={ title }
                     />
                 ) }
                 { heading && (
                     <RichText.Content
-                        className={ "wp-block-iqor-blocks-home-intro__heading" }
+                        className={ "wp-block-iqor-blocks-home-horizontal-slider-top__heading" }
                         tagName="h1"
                         value={ heading }
                     />
                 ) } 
-                { info && (
+                { activity && (
                     <RichText.Content
-                        className={ "wp-block-iqor-blocks-home-intro__info" }
+                        className={ "wp-block-iqor-blocks-home-horizontal-slider-top__activity" }
                         tagName="p"
-                        value={ info }
+                        value={ activity }
                     />
                 ) }
-                <div className={ "wp-block-iqor-blocks-home-intro__animation" }>
-                    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
-                    <lottie-player src={ animation }  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop autoplay></lottie-player>
-                </div>
+                <span className="wp-block-iqor-blocks-home-horizontal-slider-top__left-arrow dashicons dashicons-arrow-left-alt"></span>
+                <span className="wp-block-iqor-blocks-home-horizontal-slider-top__right-arrow dashicons dashicons-arrow-right-alt"></span>
             </div>
         );
     }
-
 });
