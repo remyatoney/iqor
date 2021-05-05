@@ -67,7 +67,8 @@ function iqor_blocks_register() {
 
     iqor_blocks_register_block_type('home-intro');
     iqor_blocks_register_block_type('home-horizontal-slider');
-    // iqor_blocks_register_block_type('secondblock');
+    iqor_blocks_register_block_type('home-functionalities');
+    iqor_blocks_register_block_type('home-vertical-slider');
     // iqor_blocks_register_block_type('team-member');
     // iqor_blocks_register_block_type('team-members');
 }
