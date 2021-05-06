@@ -10,6 +10,28 @@ if(! defined('ABSPATH')) {
     exit;
 }
 
+// Our custom post type function for headlines
+function create_posttype() {
+ 
+    register_post_type( 'headlines',
+    // CPT Options
+        array(
+            'labels' => array(
+                'name' => __( 'Headlines' ),
+                'singular_name' => __( 'Headline' )
+			),
+			'supports' => array( 'title', 'editor', 'excerpt', 'author', 'thumbnail', 'comments', 'revisions', 'custom-fields'),
+            'public' => true,
+			'has_archive' => true,
+            'menu_icon' => 'dashicons-text-page',
+            'rewrite' => array('slug' => 'headlines'),
+            'show_in_rest' => true,
+        )
+    );
+}
+// Hooking up our function to theme setup
+add_action( 'init', 'create_posttype' );
+
 function iqor_blocks_categories( $categories, $post ) {
     return array_merge(
         $categories,
@@ -69,8 +91,41 @@ function iqor_blocks_register() {
     iqor_blocks_register_block_type('home-horizontal-slider');
     iqor_blocks_register_block_type('home-functionalities');
     iqor_blocks_register_block_type('home-vertical-slider');
-    // iqor_blocks_register_block_type('team-member');
-    // iqor_blocks_register_block_type('team-members');
+    iqor_blocks_register_block_type('home-headlines');
+    iqor_blocks_register_block_type('home-headlines-headline', 
+        array(
+            'render_callback' => 'iqor_blocks_render_latest_headlines_block',
+            'attributes'=> array(
+                'numberOfPosts' => array(
+                    'type' => 'number',
+                    'default'=> 3
+                )
+            )
+        )
+    );
 }
 add_action('init', 'iqor_blocks_register');
 
+function iqor_blocks_render_latest_headlines_block($attributes){
+    $args = array(
+        'post_type'         =>      'headlines',
+        'posts_per_page'    =>      $attributes['numberOfPosts'],
+        'post_status'       =>      'publish',
+    );
+    $query = new WP_Query($args);
+    $posts = '';
+
+    if($query->have_posts()) {
+        $posts .= '<ul class="wp-block-iqor_blocks-latest-headlines">';
+        while ($query->have_posts()) {
+            $query->the_post();
+            $posts .= '<li><a href="' .esc_url(get_the_permalink()) . '">'
+            . get_the_title() . '</a></li>';
+        }
+        $posts .= '</ul>';
+        wp_reset_postdata();
+        return $posts;
+    } else {
+        return '<div class="wp-block-iqor_blocks-no-headlines">' . __('No Headlines Found', "iqor_blocks") . '</div>';
+    }
+} 

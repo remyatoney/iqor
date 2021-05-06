@@ -14,6 +14,9 @@ const attributes = {
         source: "html",
         selector: "p"
     },
+    backgroundColor: {
+        type: 'string',
+    },
     id: {
         type: "number"
     },
@@ -50,10 +53,10 @@ registerBlockType("iqor-blocks/home-horizontal-slider-slide", {
     edit,
 
     save: ({ attributes, className }) => {
-        const { subtitle, content, url, alt, id } = attributes;
+        const { subtitle, content, url, alt, id, backgroundColor } = attributes;
 
         return (
-            <div className={className}>
+            <div className={className} style={{ backgroundColor: backgroundColor }}>
                 { url && (
                     <div className={ "wp-block-iqor-blocks-home-horizontal-slider-slide__icon" }>
                         <img

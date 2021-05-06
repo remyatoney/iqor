@@ -5,10 +5,11 @@ import {
     BlockControls,
     MediaUpload,
     MediaUploadCheck,
-    InspectorControls,
-    PanelColorSettings
+    InspectorControls
 } from "@wordpress/block-editor";
 import { __ } from "@wordpress/i18n";
+import { withSelect } from "@wordpress/data";
+import { decodeEntities } from "@wordpress/html-entities";
 import { isBlobURL } from "@wordpress/blob";
 import {
     Spinner,
@@ -19,9 +20,10 @@ import {
     TextareaControl,
 } from "@wordpress/components";
 
-class HorizonatalSliderSlideEdit extends Component {
+class HeadlinesMainEdit extends Component {
     componentDidMount() {
-        const { attributes, setAttributes } = this.props;
+        const { attributes, setAttributes, headlines, className } = this.props;
+        console.log(this.props);
         const { url, id } = attributes;
         if (url && isBlobURL(url) && !id) {
             setAttributes({
@@ -30,16 +32,10 @@ class HorizonatalSliderSlideEdit extends Component {
             });
         }
     };
-    onChangeSubtitle = subtitle => {
-        this.props.setAttributes({ subtitle });
+    onChangeTitle = title => {
+        this.props.setAttributes({ title });
     };
-    onChangeContent = content => {
-        this.props.setAttributes({ content });
-    };
-    onChangeBackgroundColor = (backgroundColor) => { 
-        this.props.setAttributes({ backgroundColor })
-    };
-    onSelectIcon = ({ id, url, alt }) => {
+    onSelectImage = ({ id, url, alt }) => {
         this.props.setAttributes({
             id,
             url,
@@ -57,7 +53,7 @@ class HorizonatalSliderSlideEdit extends Component {
         const { noticeOperations } = this.props;
         noticeOperations.createErrorNotice(message);
     };
-    removeIcon = () => {
+    removeImage = () => {
         this.props.setAttributes({
             id: null,
             url: "",
@@ -71,11 +67,11 @@ class HorizonatalSliderSlideEdit extends Component {
     };
     render() {
         const { className, attributes, noticeUI } = this.props;
-        const { subtitle, content, url, alt, id, backgroundColor } = attributes;
+        const { title, heading, url, alt, id} = attributes;
         return (
             <>
                 <InspectorControls>
-                    <PanelBody title={__("Icon Settings", "iqor-blocks")}>
+                    <PanelBody title={__("Image Settings", "iqor-blocks")}>
                         {url && !isBlobURL(url) && (
                             <TextareaControl
                                 label={__(
@@ -85,21 +81,11 @@ class HorizonatalSliderSlideEdit extends Component {
                                 value={alt}
                                 onChange={this.updateAlt}
                                 help={__(
-                                    "Alternative text describes your icon to people can't see it. Add a short description with its key details."
+                                    "Alternative text describes your image to people who can't see it. Add a short description with its key details."
                                 )}
                             />
                         )}
                     </PanelBody>
-                    <PanelColorSettings 
-                        title={ __('Panel Color', 'iqor-blocks') }
-                        colorSettings={[
-                            {
-                                value: backgroundColor,
-                                onChange: this.onChangeBackgroundColor,
-                                label: __('Background Color', 'iqor-blocks')
-                            }
-                        ]}
-                    />
                 </InspectorControls>
                 <BlockControls>
                     {url && (
@@ -107,7 +93,7 @@ class HorizonatalSliderSlideEdit extends Component {
                             {id && (
                                 <MediaUploadCheck>
                                     <MediaUpload
-                                        onSelect={this.onSelectIcon}
+                                        onSelect={this.onSelectImage}
                                         allowedTypes={["image"]}
                                         value={id}
                                         render={({ open }) => {
@@ -115,7 +101,7 @@ class HorizonatalSliderSlideEdit extends Component {
                                                 <IconButton
                                                     className="components-icon-button components-toolbar__control"
                                                     label={__(
-                                                        "Edit Icon",
+                                                        "Edit Image",
                                                         "iqor-blocks"
                                                     )}
                                                     onClick={open}
@@ -128,27 +114,27 @@ class HorizonatalSliderSlideEdit extends Component {
                             )}
                             <IconButton
                                 className="components-icon-button components-toolbar__control"
-                                label={ __("Remove Icon", "iqor-blocks") }
-                                onClick={ this.removeIcon }
+                                label={ __("Remove Image", "iqor-blocks") }
+                                onClick={ this.removeImage }
                                 icon="trash"
                             />
                         </Toolbar>
                     )}
                 </BlockControls>
-                <div className={className} style={{ backgroundColor: backgroundColor }}>
+                <div className={className}>
                     { url ? (
                         <>
-                            <div className={ "wp-block-iqor-blocks-home-horizontal-slider-slide__icon" }>
+                            <div className={ "wp-block-iqor-blocks-home-headlines-main__image" }>
                                 <img src={url} alt={alt} />
                                 { isBlobURL(url) && <Spinner /> }
                             </div>
                         </>
                     ) : (
                         <MediaPlaceholder
-                            className={ "wp-block-iqor-blocks-home-horizontal-slider-slide__icon-placeholder" }
-                            labels = { { title: 'Upload Icon' } }
+                            className={ "wp-block-iqor-blocks-home-headlines-main__image-placeholder" }
+                            labels = { { title: 'Upload Image' } }
                             icon="format-image"
-                            onSelect={ this.onSelectIcon }
+                            onSelect={ this.onSelectImage }
                             onSelectURL={ this.onSelectURL }
                             onError={ this.onUploadError }
                             allowedTypes={ ["image"] }
@@ -156,18 +142,12 @@ class HorizonatalSliderSlideEdit extends Component {
                         />
                     ) }
                     <RichText
-                        className={ "wp-block-iqor-blocks-home-horizontal-slider-slide__subtitle" }
-                        tagName="h3"
-                        onChange={ this.onChangeSubtitle }
-                        value={ subtitle }
-                        placeholder={ __("Subtitle", "iqor-blocks") }
-                    />
-                    <RichText
-                        className={ "wp-block-iqor-blocks-home-horizontal-slider-slide__content" }
-                        tagName="p"
-                        onChange={ this.onChangeContent }
-                        value={ content }
-                        placeholder={ __("Lorem Ipsum", "iqor-blocks") }
+                        className={ "wp-block-iqor-blocks-home-headlines-main__title" }
+                        tagName="h6"
+                        onChange={ this.onChangeTitle }
+                        value={ title }
+                        placeholder={ __("HEADLINES", "iqor-blocks") }
+                        
                     />
                 </div>
             </>
@@ -175,4 +155,4 @@ class HorizonatalSliderSlideEdit extends Component {
     }
 }
 
-export default withNotices(HorizonatalSliderSlideEdit);
+export default withNotices(HeadlinesMainEdit);

@@ -5,8 +5,7 @@ import {
     BlockControls,
     MediaUpload,
     MediaUploadCheck,
-    InspectorControls,
-    PanelColorSettings
+    InspectorControls
 } from "@wordpress/block-editor";
 import { __ } from "@wordpress/i18n";
 import { isBlobURL } from "@wordpress/blob";
@@ -19,7 +18,7 @@ import {
     TextareaControl,
 } from "@wordpress/components";
 
-class HorizonatalSliderSlideEdit extends Component {
+class HeadlinesTopEdit extends Component {
     componentDidMount() {
         const { attributes, setAttributes } = this.props;
         const { url, id } = attributes;
@@ -30,14 +29,11 @@ class HorizonatalSliderSlideEdit extends Component {
             });
         }
     };
-    onChangeSubtitle = subtitle => {
-        this.props.setAttributes({ subtitle });
+    onChangeTitle = title => {
+        this.props.setAttributes({ title });
     };
-    onChangeContent = content => {
-        this.props.setAttributes({ content });
-    };
-    onChangeBackgroundColor = (backgroundColor) => { 
-        this.props.setAttributes({ backgroundColor })
+    onChangeHeading = heading => {
+        this.props.setAttributes({ heading });
     };
     onSelectIcon = ({ id, url, alt }) => {
         this.props.setAttributes({
@@ -71,7 +67,7 @@ class HorizonatalSliderSlideEdit extends Component {
     };
     render() {
         const { className, attributes, noticeUI } = this.props;
-        const { subtitle, content, url, alt, id, backgroundColor } = attributes;
+        const { title, heading, url, alt, id} = attributes;
         return (
             <>
                 <InspectorControls>
@@ -85,21 +81,11 @@ class HorizonatalSliderSlideEdit extends Component {
                                 value={alt}
                                 onChange={this.updateAlt}
                                 help={__(
-                                    "Alternative text describes your icon to people can't see it. Add a short description with its key details."
+                                    "Alternative text describes your icon to people who can't see it. Add a short description with its key details."
                                 )}
                             />
                         )}
                     </PanelBody>
-                    <PanelColorSettings 
-                        title={ __('Panel Color', 'iqor-blocks') }
-                        colorSettings={[
-                            {
-                                value: backgroundColor,
-                                onChange: this.onChangeBackgroundColor,
-                                label: __('Background Color', 'iqor-blocks')
-                            }
-                        ]}
-                    />
                 </InspectorControls>
                 <BlockControls>
                     {url && (
@@ -135,17 +121,17 @@ class HorizonatalSliderSlideEdit extends Component {
                         </Toolbar>
                     )}
                 </BlockControls>
-                <div className={className} style={{ backgroundColor: backgroundColor }}>
+                <div className={className}>
                     { url ? (
                         <>
-                            <div className={ "wp-block-iqor-blocks-home-horizontal-slider-slide__icon" }>
+                            <div className={ "wp-block-iqor-blocks-home-headlines-top__icon" }>
                                 <img src={url} alt={alt} />
                                 { isBlobURL(url) && <Spinner /> }
                             </div>
                         </>
                     ) : (
                         <MediaPlaceholder
-                            className={ "wp-block-iqor-blocks-home-horizontal-slider-slide__icon-placeholder" }
+                            className={ "wp-block-iqor-blocks-home-headlines-top__icon-placeholder" }
                             labels = { { title: 'Upload Icon' } }
                             icon="format-image"
                             onSelect={ this.onSelectIcon }
@@ -156,18 +142,18 @@ class HorizonatalSliderSlideEdit extends Component {
                         />
                     ) }
                     <RichText
-                        className={ "wp-block-iqor-blocks-home-horizontal-slider-slide__subtitle" }
-                        tagName="h3"
-                        onChange={ this.onChangeSubtitle }
-                        value={ subtitle }
-                        placeholder={ __("Subtitle", "iqor-blocks") }
+                        className={ "wp-block-iqor-blocks-home-headlines-top__title" }
+                        tagName="h6"
+                        onChange={ this.onChangeTitle }
+                        value={ title }
+                        placeholder={ __("NEWS & PRESS", "iqor-blocks") }
                     />
                     <RichText
-                        className={ "wp-block-iqor-blocks-home-horizontal-slider-slide__content" }
-                        tagName="p"
-                        onChange={ this.onChangeContent }
-                        value={ content }
-                        placeholder={ __("Lorem Ipsum", "iqor-blocks") }
+                        className={ "wp-block-iqor-blocks-home-headlines-top__heading" }
+                        tagName="h1"
+                        onChange={ this.onChangeHeading }
+                        value={ heading }
+                        placeholder={ __("Heading", "iqor-blocks") }
                     />
                 </div>
             </>
@@ -175,4 +161,4 @@ class HorizonatalSliderSlideEdit extends Component {
     }
 }
 
-export default withNotices(HorizonatalSliderSlideEdit);
+export default withNotices(HeadlinesTopEdit);

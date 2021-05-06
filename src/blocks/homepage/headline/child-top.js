@@ -1,6 +1,6 @@
 import { registerBlockType } from "@wordpress/blocks";
 import { __ } from "@wordpress/i18n";
-import edit from './edit';
+import edit from "./edit-top";
 import { RichText } from "@wordpress/block-editor";
 
 const attributes = {
@@ -29,39 +29,34 @@ const attributes = {
         source: "attribute",
         selector: "img",
         attribute: "src"
-    },
-    animation: {
-        type: "string"
     }
 };
 
-registerBlockType("iqor-blocks/home-functionality-main", {
-    title: __("Homepage Main Section", "iqor-blocks"),
+registerBlockType("iqor-blocks/home-headlines-top", {
+    title: __("Homepage Headlines Top", "iqor-blocks"),
 
-    description: __("Block showing main section of functionalities block.", "iqor-blocks"),
+    description: __("Block showing top portion of headlines. ", "iqor-blocks"),
 
     icon: "editor-textcolor",
 
-    parent: ["iqor-blocks/home-functionalities"],
-
-    category: "iqor-category",
+    parent: ["iqor-blocks/home-headlines"],
 
     supports: {
         multiple: false
     },
-
-    keywords: [ __("learn", "iqor-blocks"), __("more", "iqor-blocks"), __("what", "iqor-blocks") ],
+    
+    category: "iqor-category",
 
     attributes,
 
     edit,
 
     save: ({ attributes, className }) => {
-        const { title, heading, url, alt, id, animation } = attributes;
+        const { title, heading, url, alt, id } = attributes;
         return (
             <div className={className}>
                 { url && (
-                    <div className={ "wp-block-iqor-blocks-home-functionality-main__icon" }>
+                    <div className={ "wp-block-iqor-blocks-home-headlines-top__icon" }>
                         <img
                             src={ url }
                             alt={ alt } 
@@ -70,23 +65,20 @@ registerBlockType("iqor-blocks/home-functionality-main", {
                 ) }
                 { title && (
                     <RichText.Content
-                        className={ "wp-block-iqor-blocks-home-functionality-main__title" }
+                        className={ "wp-block-iqor-blocks-home-headlines-top__title" }
                         tagName="h6"
                         value={ title }
                     />
                 ) }
                 { heading && (
                     <RichText.Content
-                        className={ "wp-block-iqor-blocks-home-functionality-main__heading" }
+                        className={ "wp-block-iqor-blocks-home-headlines-top__heading" }
                         tagName="h1"
                         value={ heading }
                     />
                 ) } 
-                <div className={ "wp-block-iqor-blocks-home-functionality-main__animation" }>
-                    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
-                    <lottie-player src={ animation } style="width: 300px; height: 300px;" background="transparent"  speed="1" loop autoplay></lottie-player>
-                </div>
             </div>
         );
     }
+
 });
